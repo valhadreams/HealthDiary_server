@@ -2,38 +2,38 @@ import * as jwt from 'jsonwebtoken';
 
 const User = require('../../../model/user');
 
-exports.signup = (req, res) => {
-    const { id, password, email, gender, height, weight } = req.body;
-
-    const create = (user) => {
-        if(user){
-            throw new Error('user exists');
-        } else {
-            const date = new Date();
-            User.create(id, password, email, gender, height, weight, date, []);
-        }
-    };
-
-    const respond = () => {
-        res.json({
-            result : true,
-            message : 'registered successfully'
-        });
-    };
-
-    const onError = (error) => {
-        res.status(409).json({
-            result : false,
-            message : error.message
-        });
-    };
-
-    User.findOneByUsername(id)
-        .then(create)
-        .then(respond)
-        .catch(onError);
-
-};
+// exports.signup = (req, res) => {
+//     const { id, password, email, gender, height, weight } = req.body;
+//
+//     const create = (user) => {
+//         if(user){
+//             throw new Error('user exists');
+//         } else {
+//             const date = new Date();
+//             User.create(id, password, email, gender, height, weight, date, []);
+//         }
+//     };
+//
+//     const respond = () => {
+//         res.json({
+//             result : true,
+//             message : 'registered successfully'
+//         });
+//     };
+//
+//     const onError = (error) => {
+//         res.status(409).json({
+//             result : false,
+//             message : error.message
+//         });
+//     };
+//
+//     User.findOneByUsername(id)
+//         .then(create)
+//         .then(respond)
+//         .catch(onError);
+//
+// };
 
 exports.login = (req, res) => {
     const { id, password } = req.body;

@@ -1,8 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# compiled output
-/build
-
 # dependencies
 /node_modules
 
+# IDE File
+/.idea
+
+# out-put file
+/build

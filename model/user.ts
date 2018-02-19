@@ -97,7 +97,11 @@ User.statics.updateEvents = function (userId, events) {
 
 User.statics.deleteEvents = function (userId, events) {
     console.log('delete db');
-    return this.update({ 'userId' : userId }, { $pull: { events :  {'events.date' : events.date });
+    return this.update({ 'userId' : userId }, { $pull: { events :  {'events.date' : events.date }}});
+};
+
+User.statics.getEvents = function (userId) {
+    return this.findOne({ userId }, 'events').exec();
 };
 
 User.statics.findOneByUsername = function (userId) {

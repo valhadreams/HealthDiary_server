@@ -18,7 +18,7 @@ exports.getEvents = (req, res) => {
         });
     };
 
-    User.findOneByUsername(userId)
+    User.getEvents(userId)
         .then(respond)
         .catch(onError);
 };

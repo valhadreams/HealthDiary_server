@@ -9,7 +9,7 @@ const controller = require('./auth.controller');
 router.use('/user', user);
 router.use('/events', events);
 
-router.post('/signup', controller.signup);
+// router.post('/user', controller.signup);
 router.post('/login', controller.login);
 
 module.exports = router;
