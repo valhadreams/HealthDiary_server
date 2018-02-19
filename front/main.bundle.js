@@ -1361,7 +1361,7 @@ var SignInComponent = /** @class */ (function () {
             .subscribe(function (res) {
             if (res.result) {
                 localStorage.setItem('token', res.token);
-                _this.router.navigate(['/diary']);
+                _this.router.navigate(['/home/diary']);
             }
         }, function (error) {
             console.log(error);

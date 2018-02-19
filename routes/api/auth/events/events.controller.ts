@@ -1,3 +1,5 @@
+export {}; // To fix "Cannot redeclare issue"
+
 const User = require('../../../../model/user');
 
 exports.getEvents = (req, res) => {

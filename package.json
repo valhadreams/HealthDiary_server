@@ -1,8 +1,8 @@
 {
   "name": "server",
   "scripts": {
-    "prebuild": "rimraf build/front && mkdirp build/front",
-    "build": "copyup front/* build/front",
+    "prebuild": "rimraf build/front",
+    "build": "tsc && copy front build/front",
     "start": "node build/server.js",
     "dev": "npm run build && nodemon build/server.js"
   },
@@ -23,6 +23,7 @@
     "mkdirp": "^0.5.1",
     "nodemon": "^1.15.0",
     "rimraf": "^2.6.2",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "copy-dir-cli": "^0.0.3"
   }
 }
