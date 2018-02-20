@@ -637,7 +637,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/content/health-diary/health-diary.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-content health-diary-container\">\n  <div class=\"calendar-container\">\n    <div class=\"calendar-indicator\">\n      <button class=\"prev-btn btn btn-primary btn-simple btn-xs\" (click)=\"clickPrevBtn()\">\n        <i class=\"material-icons\">keyboard_arrow_left</i>\n      </button>\n      <span class=\"current-date\">{{ currentDate | date : 'yy MMM' }}</span>\n      <button class=\"next-btn btn btn-primary btn-simple btn-xs\" (click)=\"clickNextBtn()\">\n        <i class=\"material-icons\">keyboard_arrow_right</i>\n      </button>\n    </div>\n\n    <div class=\"calendar-header\">\n      <div class=\"day-of-weeks\" *ngFor=\"let day of dayOfWeeks\">\n        <span>{{ day }}</span>\n      </div>\n    </div>\n\n    <div class=\"calendar-content\">\n      <mat-grid-list cols=\"7\" rowHeight=\"1:1\">\n        <mat-grid-tile class=\"calendar-tile\" *ngFor=\"let day of days\">\n          <div *ngIf=\"day.date != null\" class=\"calendar-tile-content\">\n            <span class=\"grid-tile-date\" [class.current-day]=\"day.isCurrentDay\">{{ day.date.getDate() }}</span>\n            <button *ngIf=\"day.isEmptyEvent\" class=\"grid-tile-icon btn btn-primary btn-simple btn-xs\" (click)=\"clickAddEvent(day)\">\n              <i class=\"material-icons\">add</i>\n            </button>\n            <button *ngIf=\"!day.isEmptyEvent\" class=\"grid-tile-icon btn btn-primary btn-simple btn-xs\" (click)=\"clickEditEvent(day)\">\n              <i class=\"material-icons\">event</i>\n            </button>\n          </div>\n        </mat-grid-tile>\n      </mat-grid-list>\n    </div>\n  </div>\n\n  <div class=\"event-info-container\">\n    <div class=\"event-info\">\n      <div class=\"event-title\">\n        <h2>{{ currentDate | date : 'MM.dd'}} diary</h2>\n      </div>\n      <button class=\"btn btn-primary btn-simple btn-lg\" (click)=\"addInputEvent()\">\n        <i class=\"material-icons\">add</i>\n        <span>Add event</span>\n      </button>\n      <form #form=\"ngForm\" class=\"event-info-form\" novalidate>\n        <table class=\"event-info-table\">\n          <tbody>\n            <tr *ngFor=\"let event of currentEvents, let i = index\" ngModelGroup=\"formGroup{{ i }}\" class=\"event-info-form-group\">\n              <td class=\"col-sm-6\">\n                <div class=\"form-group label-floating\">\n                  <label class=\"control-label\">Enter your event</label>\n                  <input type=\"text\" class=\"form-control\" name=\"what\" [(ngModel)]=\"event.what\" #what=\"ngModel\" required/>\n                </div>\n              </td>\n              <td class=\"col-sm-4\">\n                <div class=\"form-group\">\n                  <select class=\"form-control\" name=\"time\" [(ngModel)]=\"event.time\" #time=\"ngModel\" required>\n                    <option hidden>Minute</option>\n                    <option *ngFor=\"let min of minList\" value=\"{{ min }}\">{{ min }}</option>\n                  </select>\n                </div>\n              </td>\n              <td class=\"col-sm-2\">\n                <button *ngIf=\"currentEvents.length > 1\" class=\"btn btn-primary btn-simple\" (click)=\"removeEvent(i)\">\n                  <i class=\"material-icons\">clear</i>\n                </button>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n        <div *ngIf=\"isInvalidForm\" class=\"error-msg\">\n          <span>{{ errorMessage }}</span>\n        </div>\n        <div class=\"event-btns\">\n          <button class=\"btn btn-primary btn-simple btn-lg\" (click)=\"submit(form.value, form.valid)\">\n            <i class=\"material-icons\">cloud_upload</i>\n            <span>Save</span>\n          </button>\n          <!--<button class=\"btn btn-primary btn-simple btn-lg\" *ngIf=\"eventsInServer !== undefined && eventsInServer.length > 1\" (click)=\"deleteAll()\">-->\n            <!--<i class=\"material-icons\">delete_forever</i>-->\n            <!--<span>Delete all</span>-->\n          <!--</button>-->\n        </div>\n        <mat-error *ngIf=\"isSameEvent\">Same with previous events</mat-error>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"main-content health-diary-container\">\n  <div class=\"calendar-container\">\n    <div class=\"calendar-indicator\">\n      <button class=\"prev-btn btn btn-primary btn-simple btn-xs\" (click)=\"clickPrevBtn()\">\n        <i class=\"material-icons\">keyboard_arrow_left</i>\n      </button>\n      <span class=\"current-date\">{{ currentDate | date : 'yy MMM' }}</span>\n      <button class=\"next-btn btn btn-primary btn-simple btn-xs\" (click)=\"clickNextBtn()\">\n        <i class=\"material-icons\">keyboard_arrow_right</i>\n      </button>\n    </div>\n\n    <div class=\"calendar-header\">\n      <div class=\"day-of-weeks\" *ngFor=\"let day of dayOfWeeks\">\n        <span>{{ day }}</span>\n      </div>\n    </div>\n\n    <div class=\"calendar-content\">\n      <mat-grid-list cols=\"7\" rowHeight=\"1:1\">\n        <mat-grid-tile class=\"calendar-tile\" *ngFor=\"let day of days\">\n          <div *ngIf=\"day.date != null\" class=\"calendar-tile-content\">\n            <span class=\"grid-tile-date\" [class.current-day]=\"day.isCurrentDay\">{{ day.date.getDate() }}</span>\n            <button *ngIf=\"day.isEmptyEvent\" class=\"grid-tile-icon btn btn-primary btn-simple btn-xs\" (click)=\"clickAddEvent(day)\">\n              <i class=\"material-icons\">add</i>\n            </button>\n            <button *ngIf=\"!day.isEmptyEvent\" class=\"grid-tile-icon btn btn-primary btn-simple btn-xs\" (click)=\"clickEditEvent(day)\">\n              <i class=\"material-icons\">event</i>\n            </button>\n          </div>\n        </mat-grid-tile>\n      </mat-grid-list>\n    </div>\n  </div>\n\n  <div class=\"event-info-container\">\n    <div class=\"event-info\">\n      <div class=\"event-title\">\n        <h2>{{ currentDate | date : 'MM.dd'}} diary</h2>\n      </div>\n      <button class=\"btn btn-primary btn-simple btn-lg\" (click)=\"addInputEvent()\">\n        <i class=\"material-icons\">add</i>\n        <span>Add event</span>\n      </button>\n      <form #form=\"ngForm\" class=\"event-info-form\" novalidate>\n        <table class=\"event-info-table\">\n          <tbody>\n            <tr *ngFor=\"let event of currentEvents, let i = index\" ngModelGroup=\"formGroup{{ i }}\" class=\"event-info-form-group\">\n              <td class=\"col-sm-6\">\n                <div class=\"form-group label-floating\">\n                  <label class=\"control-label\">Enter your event</label>\n                  <input type=\"text\" class=\"form-control\" name=\"what\" [(ngModel)]=\"event.what\" #what=\"ngModel\" required/>\n                </div>\n              </td>\n              <td class=\"col-sm-4\">\n                <div class=\"form-group\">\n                  <select class=\"form-control\" name=\"time\" [(ngModel)]=\"event.time\" #time=\"ngModel\" required>\n                    <option hidden>Minute</option>\n                    <option *ngFor=\"let min of minList\" value=\"{{ min }}\">{{ min }}</option>\n                  </select>\n                </div>\n              </td>\n              <td class=\"col-sm-2\">\n                <button class=\"btn btn-primary btn-simple\" (click)=\"removeEvent(i)\">\n                  <i class=\"material-icons\">clear</i>\n                </button>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n        <div *ngIf=\"isInvalidForm || currentEvents.length < 1\" class=\"error-msg\">\n          <span>{{ errorMessage }}</span>\n        </div>\n        <div class=\"event-btns\">\n          <button class=\"btn btn-primary btn-simple btn-lg\" (click)=\"submit(form.value, form.valid)\"  [disabled]=\"isEmptyEventDay && currentEvents.length < 1\">\n            <i class=\"material-icons\">cloud_upload</i>\n            <span>Save</span>\n          </button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -665,6 +665,7 @@ var HealthDiaryComponent = /** @class */ (function () {
     function HealthDiaryComponent(calendarService, dialog) {
         this.calendarService = calendarService;
         this.dialog = dialog;
+        this.currentEvents = [];
         this.currentBodyInfo = {
             weight: ''
         };
@@ -720,7 +721,7 @@ var HealthDiaryComponent = /** @class */ (function () {
                 isEmptyEvent = false;
             }
             else {
-                events = [{ what: '', time: '' }];
+                events = [];
             }
             var isCurrentDay = false;
             if ((i + 1) === date) {
@@ -728,6 +729,10 @@ var HealthDiaryComponent = /** @class */ (function () {
                 this_1.eventsInServer = events;
                 this_1.currentEvents = JSON.parse(JSON.stringify(events));
                 this_1.currentBodyInfo = bodyInfo;
+                this_1.isEmptyEventDay = isEmptyEvent;
+                if (this_1.currentEvents.length < 1) {
+                    this_1.errorMessage = 'Click add event button';
+                }
             }
             var dayObj = new __WEBPACK_IMPORTED_MODULE_1__services_calendar_service__["b" /* Day */](tempDate, events, bodyInfo, isCurrentDay, isEmptyEvent);
             if (i === 0) {
@@ -760,15 +765,20 @@ var HealthDiaryComponent = /** @class */ (function () {
         this.setCalendarData(dayObj.date.getFullYear(), dayObj.date.getMonth(), dayObj.date.getDate());
     };
     HealthDiaryComponent.prototype.addInputEvent = function () {
-        var lastEvent = this.currentEvents[this.currentEvents.length - 1];
-        if (lastEvent.event === '' || lastEvent.min === '') {
-            console.log('Input event info');
-            return;
+        if (this.currentEvents.length > 0) {
+            var lastEvent = this.currentEvents[this.currentEvents.length - 1];
+            if (lastEvent.event === '' || lastEvent.min === '') {
+                console.log('Input event info');
+                return;
+            }
         }
         this.currentEvents.push({ what: '', time: '' });
     };
     HealthDiaryComponent.prototype.removeEvent = function (i) {
         this.currentEvents.splice(i, 1);
+        if (this.currentEvents.length < 1) {
+            this.errorMessage = 'Click add event button';
+        }
     };
     HealthDiaryComponent.prototype.submit = function (value, isValid) {
         var _this = this;
@@ -786,10 +796,11 @@ var HealthDiaryComponent = /** @class */ (function () {
             console.log('Empty event');
         }
         else if (JSON.stringify(events) === JSON.stringify(this.eventsInServer)) {
-            this.isSameEvent = true;
+            this.isInvalidForm = true;
+            this.errorMessage = 'Same with previous events';
         }
         else {
-            if (this.eventsInServer[0].what === '' && this.eventsInServer[0].time === '') {
+            if (this.isEmptyEventDay) {
                 this.calendarService.addEventOfDay(this.currentDate, events, bodyInfo)
                     .subscribe(function (res) {
                     console.log(res);
@@ -815,18 +826,6 @@ var HealthDiaryComponent = /** @class */ (function () {
                 });
             }
         }
-    };
-    HealthDiaryComponent.prototype.deleteAll = function () {
-        var _this = this;
-        this.calendarService.updateEventOfDay(this.currentDate, null, null)
-            .subscribe(function (res) {
-            console.log(res);
-            _this.refreshData(_this.currentDate);
-        }, function (err) {
-            console.log(err);
-        }, function () {
-            console.log('delete all event complete');
-        });
     };
     HealthDiaryComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1055,7 +1054,6 @@ module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-color='
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_sign_service__ = __webpack_require__("../../../../../src/app/services/sign.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1066,10 +1064,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(signService) {
-        this.signService = signService;
+    function HomeComponent() {
         this.menus = [
             { title: "Health Diary", link: "" },
             { title: "Body Info", link: "./body-info" },
@@ -1077,9 +1073,6 @@ var HomeComponent = /** @class */ (function () {
             { title: "User Info", link: "./user-info" }
         ];
     }
-    HomeComponent.prototype.logout = function () {
-        this.signService.signOut();
-    };
     HomeComponent.prototype.ngOnDestroy = function () {
     };
     HomeComponent = __decorate([
@@ -1088,7 +1081,7 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/components/home/home.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_sign_service__["a" /* SignService */]])
+        __metadata("design:paramtypes", [])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -1217,7 +1210,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".logout {\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -1230,7 +1223,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"logo\">\n    <a href=\"/\" class=\"simple-text\">\n        Health Diary\n    </a>\n</div>\n<div class=\"sidebar-wrapper\">\n    <!--<form class=\"navbar-form navbar-right\" role=\"search\" *ngIf=\"isMobileMenu()\">-->\n        <!--<div class=\"form-group form-black is-empty\">-->\n            <!--<input type=\"text\" class=\"form-control\" placeholder=\"Search\">-->\n            <!--<span class=\"material-input\"></span>-->\n        <!--</div>-->\n        <!--<button type=\"submit\" class=\"btn btn-white btn-round btn-just-icon\">-->\n            <!--<i class=\"material-icons\">search</i><div class=\"ripple-container\"></div>-->\n        <!--</button>-->\n    <!--</form>-->\n\n    <!--<ul class=\"nav nav-mobile-menu\" *ngIf=\"isMobileMenu()\">-->\n        <!--<li>-->\n            <!--<a href=\"#pablo\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n                <!--<i class=\"material-icons\">dashboard</i>-->\n                <!--<p class=\"hidden-lg hidden-md\">Dashboard</p>-->\n            <!--</a>-->\n        <!--</li>-->\n        <!--<li class=\"dropdown\">-->\n            <!--<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n                <!--<i class=\"material-icons\">notifications</i>-->\n                <!--<span class=\"notification\">5</span>-->\n                <!--<p class=\"hidden-lg hidden-md\">Notifications</p>-->\n            <!--</a>-->\n            <!--<ul class=\"dropdown-menu\">-->\n                <!--<li><a href=\"#\">Mike John responded to your email</a></li>-->\n                <!--<li><a href=\"#\">You have 5 new tasks</a></li>-->\n                <!--<li><a href=\"#\">You're now friend with Andrew</a></li>-->\n                <!--<li><a href=\"#\">Another Notification</a></li>-->\n                <!--<li><a href=\"#\">Another One</a></li>-->\n            <!--</ul>-->\n        <!--</li>-->\n        <!--<li>-->\n            <!--<a href=\"#pablo\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n               <!--<i class=\"material-icons\">person</i>-->\n               <!--<p class=\"hidden-lg hidden-md\">Profile</p>-->\n            <!--</a>-->\n        <!--</li>-->\n    <!--</ul>-->\n\n    <div class=\"nav-container\">\n        <ul class=\"nav\">\n            <li routerLinkActive=\"active\" *ngFor=\"let menuItem of menuItems\" class=\"{{menuItem.class}}\">\n                <a  [routerLink]=\"[menuItem.path]\">\n                    <i class=\"material-icons\">{{menuItem.icon}}</i>\n                    <p>{{menuItem.title}}</p>\n                </a>\n            </li>\n        </ul>\n    </div>\n</div>\n"
+module.exports = "<div class=\"logo\">\n    <a href=\"/\" class=\"simple-text\">\n        Health Diary\n    </a>\n</div>\n<div class=\"sidebar-wrapper\">\n    <!--<form class=\"navbar-form navbar-right\" role=\"search\" *ngIf=\"isMobileMenu()\">-->\n        <!--<div class=\"form-group form-black is-empty\">-->\n            <!--<input type=\"text\" class=\"form-control\" placeholder=\"Search\">-->\n            <!--<span class=\"material-input\"></span>-->\n        <!--</div>-->\n        <!--<button type=\"submit\" class=\"btn btn-white btn-round btn-just-icon\">-->\n            <!--<i class=\"material-icons\">search</i><div class=\"ripple-container\"></div>-->\n        <!--</button>-->\n    <!--</form>-->\n\n    <!--<ul class=\"nav nav-mobile-menu\" *ngIf=\"isMobileMenu()\">-->\n        <!--<li>-->\n            <!--<a href=\"#pablo\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n                <!--<i class=\"material-icons\">dashboard</i>-->\n                <!--<p class=\"hidden-lg hidden-md\">Dashboard</p>-->\n            <!--</a>-->\n        <!--</li>-->\n        <!--<li class=\"dropdown\">-->\n            <!--<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n                <!--<i class=\"material-icons\">notifications</i>-->\n                <!--<span class=\"notification\">5</span>-->\n                <!--<p class=\"hidden-lg hidden-md\">Notifications</p>-->\n            <!--</a>-->\n            <!--<ul class=\"dropdown-menu\">-->\n                <!--<li><a href=\"#\">Mike John responded to your email</a></li>-->\n                <!--<li><a href=\"#\">You have 5 new tasks</a></li>-->\n                <!--<li><a href=\"#\">You're now friend with Andrew</a></li>-->\n                <!--<li><a href=\"#\">Another Notification</a></li>-->\n                <!--<li><a href=\"#\">Another One</a></li>-->\n            <!--</ul>-->\n        <!--</li>-->\n        <!--<li>-->\n            <!--<a href=\"#pablo\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">-->\n               <!--<i class=\"material-icons\">person</i>-->\n               <!--<p class=\"hidden-lg hidden-md\">Profile</p>-->\n            <!--</a>-->\n        <!--</li>-->\n    <!--</ul>-->\n\n    <div class=\"nav-container\">\n        <ul class=\"nav\">\n            <li routerLinkActive=\"active\" *ngFor=\"let menuItem of menuItems\" class=\"{{menuItem.class}}\">\n                <a  [routerLink]=\"[menuItem.path]\">\n                    <i class=\"material-icons\">{{menuItem.icon}}</i>\n                    <p>{{menuItem.title}}</p>\n                </a>\n            </li>\n        </ul>\n        <div class=\"logout\">\n          <button class=\"btn btn-primary\" (click)=\"logout()\">Log out</button>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1241,6 +1234,7 @@ module.exports = "<div class=\"logo\">\n    <a href=\"/\" class=\"simple-text\">
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ROUTES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SidebarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_sign_service__ = __webpack_require__("../../../../../src/app/services/sign.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1251,6 +1245,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ROUTES = [
     { path: 'diary', title: 'Diary', icon: 'event_note', class: '' },
     { path: 'body-info', title: 'Body Info', icon: 'accessibility', class: '' },
@@ -1258,7 +1253,8 @@ var ROUTES = [
     { path: 'user-info', title: 'User Profile', icon: 'person', class: '' }
 ];
 var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent() {
+    function SidebarComponent(signService) {
+        this.signService = signService;
     }
     SidebarComponent.prototype.ngOnInit = function () {
         this.menuItems = ROUTES.filter(function (menuItem) { return menuItem; });
@@ -1269,14 +1265,16 @@ var SidebarComponent = /** @class */ (function () {
         }
         return true;
     };
-    ;
+    SidebarComponent.prototype.logout = function () {
+        this.signService.signOut();
+    };
     SidebarComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-sidebar',
             template: __webpack_require__("../../../../../src/app/components/home/sidebar/sidebar.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/home/sidebar/sidebar.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_sign_service__["a" /* SignService */]])
     ], SidebarComponent);
     return SidebarComponent;
 }());
@@ -1346,6 +1344,7 @@ var SignInComponent = /** @class */ (function () {
     }
     SignInComponent.prototype.submit = function () {
         var _this = this;
+        this.isInvalidForm = false;
         if (!this.signInFormGroup.valid) {
             Object.keys(this.signInFormGroup.controls).forEach(function (field) {
                 var control = _this.signInFormGroup.get(field);
@@ -1355,11 +1354,10 @@ var SignInComponent = /** @class */ (function () {
             this.errorMessage = 'Invalid user data';
             return;
         }
-        var _a = this.signInFormGroup.value, id = _a.id, password = _a.password;
-        console.log(id, password);
-        this.signService.signIn(id, password)
+        var _a = this.signInFormGroup.value, email = _a.email, password = _a.password;
+        this.signService.signIn(email, password)
             .subscribe(function (res) {
-            if (res.result) {
+            if (res.statusCode === 200) {
                 localStorage.setItem('token', res.token);
                 _this.router.navigate(['/home/diary']);
             }
@@ -1468,6 +1466,7 @@ var SignUpComponent = /** @class */ (function () {
     }
     SignUpComponent.prototype.submit = function () {
         var _this = this;
+        this.isInvalidForm = false;
         if (!this.signUpformGroup.valid) {
             Object.keys(this.signUpformGroup.controls).forEach(function (field) {
                 var control = _this.signUpformGroup.get(field);
@@ -1478,10 +1477,10 @@ var SignUpComponent = /** @class */ (function () {
             return;
         }
         var _a = this.signUpformGroup.value, email = _a.email, nickname = _a.nickname, password = _a.password, gender = _a.gender, height = _a.height, weight = _a.weight;
-        var signInfo = new __WEBPACK_IMPORTED_MODULE_2__services_sign_service__["b" /* SignUpObj */](email, nickname, password, gender, height, weight);
+        var signInfo = new __WEBPACK_IMPORTED_MODULE_2__services_sign_service__["b" /* SignUpObj */](email, password, nickname, gender, height, weight);
         this.signService.signUp(signInfo)
             .subscribe(function (res) {
-            if (res.result)
+            if (res.statusCode === 200)
                 _this.router.navigate(['/sign-in']);
         }, function (error) {
             _this.isInvalidForm = true;
@@ -1663,7 +1662,8 @@ var AuthInterceptor = /** @class */ (function () {
     AuthInterceptor.prototype.intercept = function (request, next) {
         var requestClone = request.clone({
             setHeaders: {
-                Authorization: "Bearer " + this.authService.getToken()
+                'Authorization': "Bearer " + this.authService.getToken()
+                // 'Content-Type' : 'application/x-www-form-urlencoded'
             }
         });
         return next.handle(requestClone);
@@ -1782,6 +1782,10 @@ var CalendarService = /** @class */ (function () {
                 "event": events
             }
         };
+        // const data = new HttpParams()
+        //   .set('date', date.toString())
+        //   .set('bodyInfo', JSON.stringify(bodyInfo))
+        //   .set('event', JSON.stringify(events));
         return this.http.post('/api/auth/events', data);
     };
     CalendarService.prototype.updateEventOfDay = function (date, events, bodyInfo) {
@@ -1825,10 +1829,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var SignUpObj = /** @class */ (function () {
-    function SignUpObj(nickname, password, email, gender, height, weight) {
-        this.nickname = nickname;
-        this.password = password;
+    function SignUpObj(email, password, nickname, gender, height, weight) {
         this.email = email;
+        this.password = password;
+        this.nickname = nickname;
         this.gender = gender;
         this.height = height;
         this.weight = weight;
@@ -1849,13 +1853,23 @@ var SignService = /** @class */ (function () {
             'height': signInfo.height,
             'weight': signInfo.weight
         };
+        // const signUpInfo = new HttpParams()
+        //   .set('email', signInfo.email)
+        //   .set('password', signInfo.password)
+        //   .set('nickname', signInfo.nickname)
+        //   .set('gender', signInfo.gender)
+        //   .set('height', signInfo.height.toString())
+        //   .set('weight', signInfo.weight.toString());
         return this.httpClient.post('/api/auth/user', signUpInfo);
     };
-    SignService.prototype.signIn = function (id, password) {
+    SignService.prototype.signIn = function (email, password) {
         var signInInfo = {
-            'email': id,
+            'email': email,
             'password': password
         };
+        // const signInInfo = new HttpParams()
+        //   .set('email', email)
+        //   .set('password', password);
         return this.httpClient.post('/api/auth/login', signInInfo);
     };
     SignService.prototype.signOut = function () {

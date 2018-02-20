@@ -2,43 +2,10 @@ import * as jwt from 'jsonwebtoken';
 
 const User = require('../../../model/user');
 
-// exports.signup = (req, res) => {
-//     const { id, password, email, gender, height, weight } = req.body;
-//
-//     const create = (user) => {
-//         if(user){
-//             throw new Error('user exists');
-//         } else {
-//             const date = new Date();
-//             User.create(id, password, email, gender, height, weight, date, []);
-//         }
-//     };
-//
-//     const respond = () => {
-//         res.json({
-//             result : true,
-//             message : 'registered successfully'
-//         });
-//     };
-//
-//     const onError = (error) => {
-//         res.status(409).json({
-//             result : false,
-//             message : error.message
-//         });
-//     };
-//
-//     User.findOneByUsername(id)
-//         .then(create)
-//         .then(respond)
-//         .catch(onError);
-//
-// };
-
 exports.login = (req, res) => {
-    const { id, password } = req.body;
+    const { email, password } = req.body;
     const secret = req.app.get('jwt-secret');
-
+    console.log(req.body);
     const check = (user) => {
         if(!user){
             throw new Error('login failed');
@@ -49,7 +16,7 @@ exports.login = (req, res) => {
                     jwt.sign(
                         {
                             _id: user._id,
-                            userId: user.userId,
+                            email: user.email,
                         },
                         secret,
                         {
@@ -70,7 +37,7 @@ exports.login = (req, res) => {
 
     const respond = (token) => {
         res.json({
-            result : true,
+            statusCode : 200,
             message : 'logged in successfully',
             token
         });
@@ -78,12 +45,12 @@ exports.login = (req, res) => {
 
     const onError = (error) => {
         res.status(403).json({
-            result : false,
+            statusCode : false,
             message : error.message
         });
     };
 
-    User.findOneByUsername(id)
+    User.findOneByUsername(email)
         .then(check)
         .then(respond)
         .catch(onError);

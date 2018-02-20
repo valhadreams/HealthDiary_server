@@ -5,9 +5,9 @@ const config = require('../config');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-    userId : String,
-    password : String,
     email : String,
+    password : String,
+    nickname : String,
     gender : String,
     height : Number,
     weight : Number,
@@ -26,15 +26,15 @@ const User = new Schema({
     ]
 });
 
-User.statics.create = function (userId, password, email, gender, height, weight, regist_date, events) {
+User.statics.create = function (email, password, nickname, gender, height, weight, regist_date, events) {
     const encrypted = crypto.createHmac('sha1', config.secret)
         .update(password)
         .digest('base64');
-    console.log(userId);
+
     const user = new this({
-        userId,
-        password : encrypted,
         email,
+        password : encrypted,
+        nickname,
         gender,
         height,
         weight,
@@ -45,24 +45,23 @@ User.statics.create = function (userId, password, email, gender, height, weight,
     return user.save();
 };
 
-User.statics.updateUserInfo = function (userId, originData, newData) {
+User.statics.updateUserInfo = function (email, originData, newData) {
     if (newData.password === ''){
         newData.password = originData.password;
     }else {
-        console.log(newData.password);
         newData.password = crypto.createHmac('sha1', config.secret)
             .update(newData.password)
             .digest('base64');
     }
-    if(newData.email === '') newData.email = originData.email;
+    if(newData.nickname === '') newData.nickname = originData.nickname;
     if(newData.height === '') newData.height = originData.height;
     if(newData.weight === '') newData.weight = originData.weight;
     if(newData.gender === '') newData.gender = originData.gender;
-    console.log(newData.password);
+
     return this.update(
-        { 'userId' : userId }, { $set: {
+        { 'email' : email }, { $set: {
             password: newData.password,
-            email: newData.email,
+            nickname: newData.nickname,
             height: newData.height,
             weight: newData.weight,
             gender: newData.gender
@@ -73,21 +72,20 @@ User.statics.updateUserInfo = function (userId, originData, newData) {
     );
 };
 
-User.statics.deleteUser = function (userId) {
-    console.log(userId);
-    return this.findOneAndRemove({ userId: userId });
+User.statics.deleteUser = function (email) {
+    return this.findOneAndRemove({ email: email });
 };
 
-User.statics.addEvents = function (userId, events) {
+User.statics.addEvents = function (email, events) {
     return this.findOneAndUpdate(
-        { userId : userId }, { $push: { "events" : events }}, { new : true }
+        { email : email }, { $push: { "events" : events }}, { new : true }
     );
 };
 
-User.statics.updateEvents = function (userId, events) {
+User.statics.updateEvents = function (email, events) {
     console.log('update db');
     return this.update(
-        { 'userId' : userId, 'events.date' : events.date }, { $set: { "events.$.event" : events.event }},
+        { 'email' : email, 'events.date' : events.date }, { $set: { "events.$.event" : events.event }},
         function (err, model) {
             console.log(err);
             console.log(model);
@@ -95,18 +93,18 @@ User.statics.updateEvents = function (userId, events) {
     );
 };
 
-User.statics.deleteEvents = function (userId, events) {
+User.statics.deleteEvents = function (email, events) {
     console.log('delete db');
-    return this.update({ 'userId' : userId }, { $pull: { events :  {'events.date' : events.date }}});
+    return this.update({ 'email' : email }, { $pull: { events :  {'events.date' : events.date }}});
 };
 
-User.statics.getEvents = function (userId) {
-    return this.findOne({ userId }, 'events').exec();
+User.statics.getEvents = function (email) {
+    return this.findOne({ email }, 'events').exec();
 };
 
-User.statics.findOneByUsername = function (userId) {
+User.statics.findOneByUsername = function (email) {
     return this.findOne({
-        userId
+        email
     }).exec();
 };
 
@@ -115,8 +113,6 @@ User.methods.verify = function (password) {
         .update(password)
         .digest('base64');
 
-    console.log(this.password);
-    console.log(encrypted);
     return this.password === encrypted;
 };
 

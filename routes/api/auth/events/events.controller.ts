@@ -4,7 +4,7 @@ const User = require('../../../../model/user');
 
 exports.getEvents = (req, res) => {
     const decoded = req.decoded;
-    const userId = decoded.userId;
+    const email = decoded.email;
 
     const respond = (user) => {
         if(!user) throw new Error('user not existed');
@@ -20,7 +20,7 @@ exports.getEvents = (req, res) => {
         });
     };
 
-    User.getEvents(userId)
+    User.getEvents(email)
         .then(respond)
         .catch(onError);
 };
@@ -28,8 +28,8 @@ exports.getEvents = (req, res) => {
 exports.addEvents = (req, res) => {
     const { data } = req.body;
     const decoded = req.decoded;
-    const userId = decoded.userId;
-
+    const email = decoded.email;
+    console.log(data);
     const respond = (user) => {
         res.json({
             result : user,
@@ -43,7 +43,7 @@ exports.addEvents = (req, res) => {
         });
     };
 
-    User.addEvents(userId, data)
+    User.addEvents(email, data)
         .then(respond)
         .catch(onError);
 };
@@ -51,7 +51,8 @@ exports.addEvents = (req, res) => {
 exports.updateEvents = (req, res) => {
     const { data } = req.body;
     const decoded = req.decoded;
-    const userId = decoded.userId;
+    const email = decoded.email;
+
     console.log(data);
     const respond = (user) => {
         res.json({
@@ -67,11 +68,11 @@ exports.updateEvents = (req, res) => {
     };
 
     if(data.event === null){
-        User.deleteEvents(userId, data)
+        User.deleteEvents(email, data)
             .then(respond)
             .catch(onError);
     } else {
-        User.updateEvents(userId, data)
+        User.updateEvents(email, data)
             .then(respond)
             .catch(onError);
     }

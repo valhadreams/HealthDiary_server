@@ -3,20 +3,20 @@ export {}; // To fix "Cannot redeclare issue"
 const User = require('../../../../model/user');
 
 exports.createUserInfo = (req, res) => {
-    const { id, password, email, gender, height, weight } = req.body;
+    const { email, password, nickname, gender, height, weight } = req.body;
 
     const create = (user) => {
         if(user){
             throw new Error('user exists');
         } else {
             const date = new Date();
-            User.create(id, password, email, gender, height, weight, date, []);
+            User.create(email, password, nickname, gender, height, weight, date, []);
         }
     };
 
     const respond = () => {
         res.json({
-            result : true,
+            statusCode : 200,
             message : 'registered successfully'
         });
     };
@@ -28,7 +28,7 @@ exports.createUserInfo = (req, res) => {
         });
     };
 
-    User.findOneByUsername(id)
+    User.findOneByUsername(email)
         .then(create)
         .then(respond)
         .catch(onError);
@@ -37,13 +37,13 @@ exports.createUserInfo = (req, res) => {
 
 exports.getUserInfo = (req, res) => {
     const decoded = req.decoded;
-    const userId = decoded.userId;
+    const email = decoded.email;
 
     const respond = (user) => {
         if(!user) new Error('User info not exist');
         res.json({
-            userId: user.userId,
             email: user.email,
+            nickname: user.nickname,
             height: user.height,
             weight: user.weight,
             gender: user.gender
@@ -57,7 +57,7 @@ exports.getUserInfo = (req, res) => {
         });
     };
 
-    User.findOneByUsername(userId)
+    User.findOneByUsername(email)
         .then(respond)
         .catch(onError);
 };
@@ -65,11 +65,11 @@ exports.getUserInfo = (req, res) => {
 exports.updateUserInfo = (req, res) => {
     const data = req.body;
     const decoded = req.decoded;
-    const userId = decoded.userId;
+    const email = decoded.email;
 
     const update = function (user) {
 
-        User.updateUserInfo(userId, user, data);
+        User.updateUserInfo(email, user, data);
     };
 
     const respond = function (user) {
@@ -86,7 +86,7 @@ exports.updateUserInfo = (req, res) => {
         });
     };
 
-    User.findOneByUsername(userId)
+    User.findOneByUsername(email)
         .then(update)
         .then(respond)
         .catch(onError);
@@ -94,7 +94,7 @@ exports.updateUserInfo = (req, res) => {
 
 exports.deleteUserInfo = (req, res) => {
     const decoded = req.decoded;
-    const userId = decoded.userId;
+    const email = decoded.email;
 
     const respond = (user) => {
         if(!user) new Error('User info not exist');
@@ -111,7 +111,7 @@ exports.deleteUserInfo = (req, res) => {
         });
     };
 
-    User.deleteUser(userId)
+    User.deleteUser(email)
         .then(respond)
         .catch(onError);
 };
